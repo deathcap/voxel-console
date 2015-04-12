@@ -1,4 +1,7 @@
 
+inherits = require('inherits');
+EventEmitter = require('events').EventEmitter;
+
 Modal = require 'voxel-modal'
 ConsoleWidget = require 'console-widget'
 
@@ -17,7 +20,7 @@ class Console extends Modal
 
     # options for ConsoleWidget
     widgetOpts = @opts  # pass through voxel-console opts (no need to copy)
-  
+
     # nothing closes the widget, hide/show is handled by voxel-modal
     widgetOpts.closeKeys = []
     @widget = ConsoleWidget(widgetOpts)
@@ -28,6 +31,7 @@ class Console extends Modal
     @bindKeys()
 
     super game, {element: @widget.containerNode}
+  inherits(Console, EventEmitter)
 
   bindKeys: () ->
     #@game.buttons.bindings.console ?= 'T' # TODO: bind these keys ourselves?
@@ -41,11 +45,18 @@ class Console extends Modal
 
   open: (initialText=undefined) ->
     super()
+    @emit('open')
+    @on 'open', =>
+      console.log 'opened'
 
     @widget.open(initialText)
 
   close: () ->
     super()
+    console.log("closed")
+    @emit('close')
+    @on 'close', =>
+      console.log 'closed'
     #@widget.close()  # modal hides everything
 
   log: (text) ->
@@ -53,4 +64,3 @@ class Console extends Modal
 
   logNode: (node) ->
     @widget.logNode(node)
-

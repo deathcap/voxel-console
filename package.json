@@ -1,7 +1,7 @@
 {
   "name": "voxel-console",
   "description": "",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "console.coffee",
   "repository": {
     "type": "git",
@@ -13,8 +13,9 @@
     "console"
   ],
   "dependencies": {
-    "voxel-modal": "^0.2.2",
-    "console-widget": "^0.2.1"
+    "console-widget": "^0.2.1",
+    "inherits": "^2.0.1",
+    "voxel-modal": "^0.2.2"
   },
   "browserify": {
     "transform": [
